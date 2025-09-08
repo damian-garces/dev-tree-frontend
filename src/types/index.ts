@@ -1,0 +1,11 @@
+export type User = {
+  name: string;
+  email: string;
+  handle: string;
+  password: string;
+}
+
+export type RegisterFormData = Pick<User, 'name' | 'email' | 'handle'> & {
+  password: string;
+  password_confirmation: string;
+}
