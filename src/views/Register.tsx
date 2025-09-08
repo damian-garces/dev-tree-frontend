@@ -3,6 +3,7 @@ import { useForm } from  'react-hook-form'
 import ErrorMessage from "../components/ErrorMessage";
 import type { RegisterFormData } from "../types";
 import axios, { isAxiosError } from "axios";
+import { toast } from "sonner";
 
 export default function Register() {
 
@@ -24,11 +25,11 @@ export default function Register() {
   const handleRegister = async (formData: RegisterFormData) => {
     try {
       const { data } = await axios.post(`${import.meta.env.VITE_API_URL}/auth/register`, formData);
-      console.log('Registration successful:', data);
+      toast.success(data);
       reset();
     } catch (error) {
       if (isAxiosError(error)) {
-        console.error('Registration error:', error.response?.data.error || error.message);
+        toast.error(error.response?.data || error.message);
       }
     }
   }
