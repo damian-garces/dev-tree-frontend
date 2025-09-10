@@ -20,7 +20,9 @@ export default function Login() {
   const handleLogin = async (formData: LoginFormData) => {
     try {
       const { data } = await axios.post('/auth/login', formData);
-      toast.success(data);
+      const { token } = data;
+      localStorage.setItem('AUTH_TOKEN', token);
+      toast.success(token);
     } catch (error) {
       if (isAxiosError(error)) {
         toast.error(error.response?.data || error.message);
