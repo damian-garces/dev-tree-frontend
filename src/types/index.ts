@@ -3,6 +3,7 @@ export type User = {
   email: string;
   handle: string;
   password: string;
+  description?: string;
 }
 
 export type RegisterFormData = Pick<User, 'name' | 'email' | 'handle'> & {
@@ -11,3 +12,7 @@ export type RegisterFormData = Pick<User, 'name' | 'email' | 'handle'> & {
 }
 
 export type LoginFormData = Pick<User, 'email' | 'password'>;
+
+export type ProfileFormData = Pick<User, 'handle' | 'description'> & {
+  image?: FileList;
+}
