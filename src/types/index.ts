@@ -4,6 +4,7 @@ export type User = {
   handle: string;
   password: string;
   description?: string;
+  imageUrl: string;
 }
 
 export type RegisterFormData = Pick<User, 'name' | 'email' | 'handle'> & {
@@ -16,3 +17,5 @@ export type LoginFormData = Pick<User, 'email' | 'password'>;
 export type ProfileFormData = Pick<User, 'handle' | 'description'> & {
   image?: FileList;
 }
+
+export type PfrofileImage = Pick<User, 'imageUrl'>;

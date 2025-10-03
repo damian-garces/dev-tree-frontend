@@ -2,8 +2,9 @@ import { useForm } from 'react-hook-form';
 import ErrorMessage from '../components/ErrorMessage';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import type { ProfileFormData, User } from '../types';
-import { updateProfile } from '../api/DevTreeApi';
+import { updateProfile, updateProfileImage } from '../api/DevTreeApi';
 import { toast } from 'sonner';
+import type React from 'react';
 
 export default function Profile() {
 
@@ -26,6 +27,32 @@ export default function Profile() {
       queryClient.invalidateQueries({ queryKey: ['user'] });
     },
   });
+
+  const updateImageMutation = useMutation({
+    mutationFn: updateProfileImage,
+    onError: (error) => {
+      console.error('Error updating profile image:', error);
+      toast.error(error.message);
+    },
+    onSuccess: (data) => {
+      // optimistic update
+      queryClient.setQueryData(['user'], (oldData: User) => {
+        return {
+          ...oldData,
+          imageUrl: data?.imageUrl
+        };
+      });
+    },
+  });
+
+  const handleChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append('image', file);
+      await updateImageMutation.mutateAsync(formData);
+    }
+  }
 
   const handleProfile = async (data: ProfileFormData) => {
     await updateProfileMutation.mutateAsync(data);
@@ -76,7 +103,7 @@ export default function Profile() {
           name="handle"
           className="border-none bg-slate-100 rounded-lg p-2"
           accept="image/*"
-          onChange={() => {}}
+          onChange={handleChangeImage}
         />
       </div>
 
