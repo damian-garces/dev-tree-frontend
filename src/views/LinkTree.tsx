@@ -12,6 +12,13 @@ export default function LinkTree() {
     setDevTreeLinks(updateLinks);
   }
 
+  const handleEnabledLink = (socialNetwork: string) => {
+    const updateLinks = devTreeLinks.map((item) => {
+      return item.name === socialNetwork ? { ...item, enabled: !item.enabled } : item;
+    });
+    setDevTreeLinks(updateLinks);
+  }
+
   return (
     <>
       <div className="space-y-5">
@@ -20,6 +27,7 @@ export default function LinkTree() {
             key={item.name}
             item={item}
             handleUrlChange={handleUrlChange}
+            handleEnabledLink={handleEnabledLink}
           />
         ))}
       </div>
