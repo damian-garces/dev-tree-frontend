@@ -55,7 +55,10 @@ export default function Profile() {
   }
 
   const handleProfile = async (data: ProfileFormData) => {
-    await updateProfileMutation.mutateAsync(data);
+    const user : User = queryClient.getQueryData(['user'])!;
+    user.description = data.description;
+    user.handle = data.handle;
+    await updateProfileMutation.mutateAsync(user);
   }
 
   return (
