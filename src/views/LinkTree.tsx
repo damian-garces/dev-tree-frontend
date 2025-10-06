@@ -1,13 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { social } from "../data/social";
 import DevTreeInput from "../components/DevTreeInput";
 import { isValidUrl } from "../utils";
 import { toast } from "sonner";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { updateProfile } from "../api/DevTreeApi";
-import type { User } from "../types";
+import type { SocialNetwork, User } from "../types";
 
 export default function LinkTree() {
+
+  useEffect(() => {
+    const updatedata = devTreeLinks.map((item) => {
+      const userLinks = JSON.parse(user.links).find((link: SocialNetwork) => link.name === item.name);
+      if(userLinks) {
+        return { ...item, url: userLinks.url, enabled: userLinks.enabled };
+      }
+      return item;
+    });
+    setDevTreeLinks(updatedata);
+  }, []);
+
   const [devTreeLinks, setDevTreeLinks] = useState(social);
 
   const queryClient = useQueryClient();
@@ -27,6 +39,7 @@ export default function LinkTree() {
     const updateLinks = devTreeLinks.map((item) => {
       return item.name === e.target.name ? { ...item, url: e.target.value } : item; 
     });
+
     setDevTreeLinks(updateLinks);
   }
 

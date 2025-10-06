@@ -18,6 +18,7 @@ export default function DevTreeInput({item, handleUrlChange, handleEnabledLink}:
         onChange={handleUrlChange}
         type="text"
         name={item.name}
+        value={item.url}
         className="flex-1 border border-gray-100 rounded-lg"
       />
 
