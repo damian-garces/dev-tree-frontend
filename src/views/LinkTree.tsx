@@ -35,6 +35,8 @@ export default function LinkTree() {
     }
   });
 
+  const links: SocialNetwork[] = JSON.parse(user.links);
+
   const handleUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const updateLinks = devTreeLinks.map((item) => {
       return item.name === e.target.name ? { ...item, url: e.target.value } : item; 
@@ -54,12 +56,52 @@ export default function LinkTree() {
       }
       return item;
     });
+    
     setDevTreeLinks(updateLinks);
 
+    let updatedItems: SocialNetwork[] = [];
+
+    const selectedSocialNetwork = updateLinks.find(link => link.name === socialNetwork);
+    if (selectedSocialNetwork?.enabled) {
+      const id = links.filter(link => link.enabled).length + 1;
+      if (links.some(link => link.name === socialNetwork)) {
+        updatedItems = links.map(link => 
+          link.name === socialNetwork ? 
+          { 
+            ...link, 
+            id: id,
+            enabled: true,
+          } : link
+        );
+      } else {
+        const newItem: SocialNetwork = {  
+          ...selectedSocialNetwork,
+          id: id
+        };
+
+        updatedItems = [...links, newItem];
+      }
+    } else {
+      const indexToUpdate = links.findIndex(link => link.name === socialNetwork);
+
+      updatedItems = links.map((link, index) => {
+        if (index === indexToUpdate) {
+          return { ...link, id: 0, enabled: false };
+        } else if (link.id > indexToUpdate) {
+          return { ...link, id: link.id - 1 };
+        } else {
+          return link;
+        }
+      });
+    }
+
+    console.log(updatedItems);
+
+    // Save changes to React Query cache
     queryClient.setQueryData(['user'], (oldData: User) => {
       return {
         ...oldData,
-        links: JSON.stringify(updateLinks)
+        links: JSON.stringify(updatedItems)
       };
     });
   }
