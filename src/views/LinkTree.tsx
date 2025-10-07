@@ -63,7 +63,7 @@ export default function LinkTree() {
 
     const selectedSocialNetwork = updateLinks.find(link => link.name === socialNetwork);
     if (selectedSocialNetwork?.enabled) {
-      const id = links.filter(link => link.enabled).length + 1;
+      const id = links.filter(link => link.id).length + 1;
       if (links.some(link => link.name === socialNetwork)) {
         updatedItems = links.map(link => 
           link.name === socialNetwork ? 
@@ -83,19 +83,17 @@ export default function LinkTree() {
       }
     } else {
       const indexToUpdate = links.findIndex(link => link.name === socialNetwork);
-
-      updatedItems = links.map((link, index) => {
-        if (index === indexToUpdate) {
+      const linkToDisableId = links[indexToUpdate].id;
+      updatedItems = links.map((link) => {
+        if (link.name === socialNetwork) {
           return { ...link, id: 0, enabled: false };
-        } else if (link.id > indexToUpdate) {
+        } else if (link.id > linkToDisableId) {
           return { ...link, id: link.id - 1 };
         } else {
           return link;
         }
       });
     }
-
-    console.log(updatedItems);
 
     // Save changes to React Query cache
     queryClient.setQueryData(['user'], (oldData: User) => {
@@ -118,7 +116,7 @@ export default function LinkTree() {
           />
         ))}
         <button
-          onClick={() => mutate(user)}
+          onClick={() => mutate(queryClient.getQueryData(['user'])!)}
           className="bg-cyan-400 p-2 text-lg w-full uppercase text-slate-600 rounded-lg font-bold"
         >
           Save Changes
