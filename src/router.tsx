@@ -7,6 +7,7 @@ import LinkTree from './views/LinkTree';
 import Profile from './views/Profile';
 import HandleView from './views/HandleView';
 import HandleLayout from './layouts/HandleLayout';
+import NotFound from './views/NotFound';
 
 export default function Router() {
   return (
@@ -24,6 +25,10 @@ export default function Router() {
 
         <Route path='/:handle' element={<HandleLayout />} >
           <Route index={true} element={<HandleView />} />
+        </Route>
+
+        <Route path='/404' element={<HandleLayout />} >
+          <Route index={true} element={<NotFound />} />
         </Route>
       </Routes>
     </BrowserRouter>
