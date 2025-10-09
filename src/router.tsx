@@ -8,11 +8,14 @@ import Profile from './views/Profile';
 import HandleView from './views/HandleView';
 import HandleLayout from './layouts/HandleLayout';
 import NotFound from './views/NotFound';
+import HomeView from './views/HomeView';
 
 export default function Router() {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/" element={<HomeView />} />
+
         <Route element={<AuthLayout />}>
           <Route path="auth/login" element={<Login />} />
           <Route path="auth/register" element={<Register />} />

@@ -6,7 +6,14 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}"
   ],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "home": "URL('/bg.svg')"
+      },
+      backgroundSize: {
+        "home-xl": "50%"
+      }
+    },
   },
   plugins: [
     forms,
