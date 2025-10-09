@@ -2,6 +2,8 @@
 
 Frontend project in React with TypeScript and Vite for user management, registration, and authentication interface.
 
+**🚀 This project is deployed on [Netlify](https://www.netlify.com/)**
+
 ## Project Structure
 
 * **src/main.tsx**: Entry point that renders the React application.
@@ -69,6 +71,8 @@ This project uses Vite as the build tool with React and TypeScript for a modern 
 # Dev Tree Frontend (Español)
 
 Proyecto frontend en React con TypeScript y Vite para la interfaz de gestión de usuarios, registro y autenticación.
+
+**🚀 Este proyecto está desplegado en [Netlify](https://www.netlify.com/)**
 
 ## Estructura del Proyecto
 
