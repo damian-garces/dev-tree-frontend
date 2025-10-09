@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useForm } from  'react-hook-form'
 import ErrorMessage from "../components/ErrorMessage";
 import type { RegisterFormData } from "../types";
@@ -8,10 +8,12 @@ import axios from "../config/axios";
 
 export default function Register() {
 
+  const location = useLocation();
+
   const initialValues :  RegisterFormData = {
     name: '',
     email: '',
-    handle: '',
+    handle: location.state?.handle || '',
     password: '',
     password_confirmation: '',
   };

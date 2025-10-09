@@ -1,4 +1,5 @@
 import Header from "../components/Header";
+import SearchForm from "../components/SearchForm";
 
 export default function HomeView() {
   return (
@@ -17,6 +18,8 @@ export default function HomeView() {
               place. Create your profile, add your social networks and share it with
               the world.
             </p>
+
+            <SearchForm />
           </div>
         </div>
       </main>
